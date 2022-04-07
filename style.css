@@ -1,5 +1,5 @@
 .backgrounnd {
-    height: 100vh ;
+    min-height: 100vh ;
     background: linear-gradient(#89bbff, #5af7fd);
 }
 body {
@@ -80,7 +80,7 @@ p {
     background: rgba(196, 231, 253, 0.83);
     display: block;
     padding: 20px;
-    margin: 40px 40px 40px 40px;
+    margin: 0px 40px 40px 40px;
     border-radius: 10px;
-    width: 300px;
+    width: 100%;
 }

@@ -859,22 +859,30 @@ function loadSelector() {
 document.addEventListener('DOMContentLoaded', loadSelector);
 
 function getDataFromAPI(coordinates) {
-    let api_url = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates[0]}&lon=${coordinates[1]}&exclude=hourly&appid=4cedf0ecdc32c14d1375f2487331d55b`;
+    let api_url = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates[0]}&lon=${coordinates[1]}&exclude=hourly&units=metric&appid=4cedf0ecdc32c14d1375f2487331d55b`;
     fetch(api_url)
         .then(response => {
             response.json().then(data => {
+
                 let container = document.getElementById('container')
                 if (container.children.length > 0) {
                     console.log(container.children.length)
-                    for (let i = 0; i< container.children.length; i++) {
-                        container.removeChild(container.children[i])
+                    for (let i = 0; i < container.children.length; i++) {
+                        let div = document.getElementById('container');
+                        while(div.firstChild){
+                            div.removeChild(div.firstChild);
+                        }
                     }
                 }
                 for (let index in data['daily']) {
-                    let temp = data['daily'][index]['temp']['day']
+                    let day = data['daily'][index]['dt']
+                    let temp = Math.round(data['daily'][index]['temp']['day'])
+                    let days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+                    let d = new Date(day * 1000);
+                    let dayName = days[d.getDay()];
                     let weatherContainer = document.createElement('div',)
                     let p = document.createElement('p')
-                    p.innerHTML = temp;
+                    p.innerHTML = dayName + ' ' +  temp + '℃'
                     weatherContainer.appendChild(p)
                     container.appendChild(weatherContainer)
 
